@@ -1,0 +1,12 @@
+---
+- name: make sure postgres is installed
+  apt:
+    name: postgresql
+    state: latest
+    update_cache: yes
+
+- name: make sure its running
+  service:
+      name: postgresql
+      state: stopped
+      enabled: no

@@ -1,0 +1,26 @@
+---
+- name: make sure nginx is installed
+  apt:
+    name: nginx
+    state: latest
+    update_cache: yes
+
+- name: make sure its running
+  service:
+      name: nginx
+      state: started
+      enabled: yes
+
+- name: make sure angular directory exists
+  file:
+    path: /var/www/angular-deploy
+    state: directory
+    mode: '0755'
+
+- name: copy angular nginx config
+  copy:
+     src: "{{ role_path }}/files/default"
+     dest: /etc/nginx/sites-available/default
+     mode: 644
+  notify:
+     - restart nginx
