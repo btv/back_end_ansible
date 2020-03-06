@@ -1,0 +1,23 @@
+---
+- name: make sure ded_backend directory exists
+  file:
+    path: /opt/ded_backend
+    state: directory
+    mode: '0755'
+
+- name: copy ded_backend systemd file
+  copy:
+     src: "{{ role_path }}/files/ded_backend"
+     dest: /lib/systemd/system/ded_backend.service
+     mode: 0644
+  notify:
+     - reload systemctl
+
+- meta: flush_handlers
+
+- name: make sure its running
+  service:
+      name: ded_backend.service
+      state: started
+      enabled: yes
+

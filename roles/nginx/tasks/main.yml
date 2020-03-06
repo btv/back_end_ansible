@@ -11,14 +11,11 @@
       state: started
       enabled: yes
 
-- name: make sure nginx directories exists
+- name: make sure nginx directory exists
   file:
-    path: /var/www/{{ item }}
+    path: /var/www/angular-deploy
     state: directory
     mode: '0755'
-  loop:
-    - angular-deploy
-    - ded_backend
 
 - name: copy angular nginx config
   copy:
@@ -28,19 +25,8 @@
   notify:
      - restart nginx
 
-- name: copy ded_backend nginx config
-  copy:
-     src: "{{ role_path }}/files/ded_backend"
-     dest: /etc/nginx/sites-available/ded_backend
-     mode: 644
-  notify:
-     - restart nginx
-
-- name: confirm sites are enabled
+- name: confirm site is enabled
   file:
-    src: /etc/nginx/sites-available/{{ item }}
-    dest: /etc/nginx/sites-enabled/{{ item }}
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
     state: link
-  loop:
-    - default
-    - ded_backend

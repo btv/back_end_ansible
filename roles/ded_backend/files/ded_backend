@@ -1,0 +1,15 @@
+[Unit]
+Description=DED Backend engine
+Requires=network.target
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/ded_backend/main
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+TimeoutStartSec=2
+User=nobody
+
+[Install]
+WantedBy=multi-user.target
