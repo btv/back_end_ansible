@@ -6,6 +6,6 @@
 
 
   roles:
-      - nginx
-      - ded_backend
-      - postgres
+      - {role: nginx, tags: ['nginx']}
+      - {role: ded_backend, tags: ['backend']}
+      - {role: postgres, tags: ['database']}
