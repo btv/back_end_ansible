@@ -5,12 +5,6 @@
     state: latest
     update_cache: yes
 
-- name: make sure its running
-  service:
-      name: nginx
-      state: started
-      enabled: yes
-
 - name: make sure nginx directory exists
   file:
     path: /var/www/angular-deploy
@@ -25,8 +19,28 @@
   notify:
      - restart nginx
 
-- name: confirm site is enabled
+- name: copy ded_backend nginx site file
+  copy:
+     src: "{{ role_path }}/files/ded_backend_doc"
+     dest: /etc/nginx/sites-available/ded_backend_doc
+     mode: 644
+  notify:
+     - restart nginx
+
+- name: confirm angular site is enabled
   file:
     src: /etc/nginx/sites-available/default
     dest: /etc/nginx/sites-enabled/default
     state: link
+
+- name: confirm ded_backend site is enabled
+  file:
+    src: /etc/nginx/sites-available/ded_backend_doc
+    dest: /etc/nginx/sites-enabled/ded_backend_doc
+    state: link
+
+- name: make sure its running
+  service:
+      name: nginx
+      state: started
+      enabled: yes
