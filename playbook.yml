@@ -3,9 +3,12 @@
   become: yes
   vars:
       ansible_python_interpreter: "/usr/bin/env python"
+      backend_directory: "{{ lookup('env', 'PWD') }}"
+      frontend_directory: "{{ lookup('env', 'PWD') }}"
 
 
   roles:
       - {role: nginx, tags: ['nginx']}
       - {role: ded_backend, tags: ['backend']}
+      - {role: ded_backend_docs, tags: ['backend_docs']}
       - {role: postgres, tags: ['database']}
