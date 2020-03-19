@@ -1,0 +1,20 @@
+---
+
+- name: generating new angular files
+  delegate_to: localhost
+  become: "{{ lookup('env', 'USER') }}"
+  command: ng build --build
+  args:
+      chdir: "{{ frontend_directory }}"
+      creates: "{{ frontend_directory }}/dist/DED"
+
+- name: deploy angular files
+  synchronize:
+      src: "{{ frontend_directory }}/dist/DED/"
+      dest: /var/www/angular-deploy/
+      archive: no
+      checksum: yes
+      recursive: yes
+      delete: yes
+  notify:
+     - restart nginx
