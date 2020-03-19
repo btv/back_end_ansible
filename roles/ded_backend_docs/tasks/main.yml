@@ -1,0 +1,24 @@
+---
+- name: make sure ded_backend docs directory exists
+  file:
+    path: /opt/ded_backend_doc
+    state: directory
+    mode: '0755'
+
+- name: generating new docs
+  delegate_to: localhost
+  become: "{{ lookup('env', 'USER') }}"
+  command: cargo doc
+  args:
+      chdir: "{{ backend_directory }}"
+      creates: "{{ backend_directory }}/target/doc"
+
+- name: copy all backend doc file
+  synchronize:
+      src: "{{ backend_directory }}/target/doc/"
+      dest: /opt/ded_backend_doc
+      archive: no
+      checksum: yes
+      recursive: yes
+      delete: yes
+
