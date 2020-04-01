@@ -21,3 +21,20 @@
       state: started
       enabled: yes
 
+- name: generate new production executable
+  delegate_to: localhost
+  become: "{{ lookup('env', 'USER') }}"
+  command: cargo build --release
+  args:
+      chdir: "{{ backend_directory }}"
+      creates: "{{ backend_directory }}/target/release/"
+
+- name: copy all backend files
+  synchronize:
+      src: "{{ backend_directory }}/target/release/"
+      dest: /opt/ded_backend
+      archive: no
+      checksum: yes
+      recursive: yes
+      delete: yes
+
