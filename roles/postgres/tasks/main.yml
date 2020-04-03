@@ -16,5 +16,5 @@
 - name: make sure its running
   service:
       name: postgresql
-      state: stopped
-      enabled: no
+      state: started
+      enabled: yes
