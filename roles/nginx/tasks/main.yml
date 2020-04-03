@@ -19,10 +19,18 @@
   notify:
      - restart nginx
 
-- name: copy ded_backend nginx site file
+- name: copy ded_backend_doc nginx site file
   copy:
      src: "{{ role_path }}/files/ded_backend_doc"
      dest: /etc/nginx/sites-available/ded_backend_doc
+     mode: 644
+  notify:
+     - restart nginx
+
+- name: copy ded_backend_doc nginx site file
+  copy:
+     src: "{{ role_path }}/files/ded_backend"
+     dest: /etc/nginx/sites-available/ded_backend
      mode: 644
   notify:
      - restart nginx
@@ -33,10 +41,16 @@
     dest: /etc/nginx/sites-enabled/default
     state: link
 
-- name: confirm ded_backend site is enabled
+- name: confirm ded_backend_doc site is enabled
   file:
     src: /etc/nginx/sites-available/ded_backend_doc
     dest: /etc/nginx/sites-enabled/ded_backend_doc
+    state: link
+
+- name: confirm ded_backend_doc site is enabled
+  file:
+    src: /etc/nginx/sites-available/ded_backend
+    dest: /etc/nginx/sites-enabled/ded_backend
     state: link
 
 - name: make sure its running
