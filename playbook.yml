@@ -9,7 +9,7 @@
 
   roles:
       - {role: nginx, tags: ['nginx']}
-      - {role: ded_backend, tags: ['backend']}
-      - {role: ded_frontend_docs, tags: ['frontend_docs', 'full_backend']}
+      - {role: ded_backend, tags: ['backend', 'full_backend']}
+      - {role: ded_frontend_docs, tags: ['frontend_docs']}
       - {role: ded_backend_docs, tags: ['backend_docs', 'full_backend']}
       - {role: postgres, tags: ['database']}
