@@ -10,6 +10,7 @@ ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 TimeoutStartSec=2
 User=nobody
+Environment="DATABASE_URL=postgres://ded_user:ded_user@localhost:5433/ded_backend"
 
 [Install]
 WantedBy=multi-user.target
