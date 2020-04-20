@@ -37,4 +37,5 @@
       checksum: yes
       recursive: yes
       delete: yes
-
+  notify:
+     - reload systemctl
